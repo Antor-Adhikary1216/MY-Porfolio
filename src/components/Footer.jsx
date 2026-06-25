@@ -1,4 +1,4 @@
-import { Code2, Github, Linkedin, Mail } from "lucide-react";
+import { Github, Linkedin, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const socialLinks = [
@@ -12,9 +12,16 @@ export default function Footer() {
     <footer className="border-t border-white/8 bg-ink-950/45">
       <div className="container-shell flex flex-col gap-8 py-10 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <Link className="inline-flex items-center gap-2 font-semibold text-white" to="/">
-            <Code2 className="size-5 text-cyan-accent" aria-hidden="true" />
-            Antor Adhikari
+          <Link
+            className="relative block h-28 w-44 overflow-hidden rounded-xl transition hover:brightness-110"
+            to="/"
+            aria-label="Code with Antor home"
+          >
+            <img
+              src="/code-with-antor-logo.png"
+              alt="Code with Antor"
+              className="absolute -top-4 left-0 size-44 max-w-none object-contain"
+            />
           </Link>
           <p className="mt-2 text-sm text-slate-500">
             Designing thoughtful interfaces and dependable APIs.

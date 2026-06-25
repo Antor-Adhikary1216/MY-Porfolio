@@ -1,4 +1,4 @@
-import { Code2, LayoutDashboard, LogIn, Menu, X } from "lucide-react";
+import { LayoutDashboard, LogIn, Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
@@ -43,13 +43,16 @@ export default function Navbar() {
       aria-label="Main navigation"
     >
       <div className="container-shell flex h-18 items-center justify-between">
-        <Link className="inline-flex items-center gap-2 font-semibold text-white" to="/">
-          <span className="grid size-9 place-items-center rounded-xl bg-gradient-to-br from-cyan-400 to-blue-600 shadow-lg shadow-blue-500/20">
-            <Code2 className="size-5" aria-hidden="true" />
-          </span>
-          <span>
-            Antor<span className="text-cyan-accent">.</span>
-          </span>
+        <Link
+          className="relative h-16 w-24 shrink-0 overflow-hidden rounded-xl transition hover:brightness-110"
+          to="/"
+          aria-label="Code with Antor home"
+        >
+          <img
+            src="/code-with-antor-logo.png"
+            alt="Code with Antor"
+            className="absolute -top-2 left-0 size-24 max-w-none object-contain"
+          />
         </Link>
 
         <div className="hidden items-center gap-1 lg:flex">
