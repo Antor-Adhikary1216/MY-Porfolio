@@ -1,0 +1,156 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", "Segoe UI", system-ui, sans-serif;
+  --color-ink-950: #050816;
+  --color-ink-900: #090e20;
+  --color-ink-800: #11182d;
+  --color-cyan-accent: #3ee8ff;
+  --color-blue-accent: #5794ff;
+  --color-purple-accent: #9d6cff;
+  --shadow-glow: 0 0 60px rgba(87, 148, 255, 0.2);
+}
+
+:root {
+  color: #e7edff;
+  background: #050816;
+  font-family: var(--font-sans);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-color: #33416b #090e20;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  overflow-x: hidden;
+  background:
+    radial-gradient(circle at 15% 12%, rgba(87, 148, 255, 0.14), transparent 30rem),
+    radial-gradient(circle at 85% 18%, rgba(157, 108, 255, 0.12), transparent 28rem),
+    radial-gradient(circle at 50% 90%, rgba(62, 232, 255, 0.08), transparent 36rem),
+    #050816;
+}
+
+body::before {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  content: "";
+  pointer-events: none;
+  opacity: 0.18;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 52px 52px;
+  mask-image: linear-gradient(to bottom, black, transparent 78%);
+}
+
+button,
+a,
+input,
+textarea,
+select {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button,
+a {
+  outline: none;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid #3ee8ff;
+  outline-offset: 3px;
+}
+
+::selection {
+  color: white;
+  background: rgba(87, 148, 255, 0.45);
+}
+
+.container-shell {
+  width: min(100% - 2rem, 1180px);
+  margin-inline: auto;
+}
+
+.glass-card {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(145deg, rgba(20, 29, 55, 0.78), rgba(8, 13, 31, 0.68));
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.05), 0 24px 70px rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(18px);
+}
+
+.gradient-text {
+  color: transparent;
+  background: linear-gradient(90deg, #3ee8ff, #5794ff 48%, #b67aff);
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+.gradient-border {
+  position: relative;
+  isolation: isolate;
+}
+
+.gradient-border::before {
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  padding: 1px;
+  content: "";
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(62, 232, 255, 0.65), rgba(157, 108, 255, 0.52), transparent 70%);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+
+.field {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.85rem;
+  padding: 0.8rem 0.95rem;
+  color: #f5f7ff;
+  background: rgba(5, 8, 22, 0.66);
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.field::placeholder {
+  color: #66708f;
+}
+
+.field:focus {
+  border-color: rgba(62, 232, 255, 0.65);
+  box-shadow: 0 0 0 3px rgba(62, 232, 255, 0.08);
+}
+
+.prose-content p + p {
+  margin-top: 1.25rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

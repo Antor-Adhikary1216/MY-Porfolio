@@ -1,0 +1,128 @@
+import { Code2, LayoutDashboard, LogIn, Menu, X } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Link, NavLink, useLocation } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
+
+const navItems = [
+  { label: "Home", to: "/" },
+  { label: "About", to: "/#about" },
+  { label: "Skills", to: "/#skills" },
+  { label: "Projects", to: "/projects" },
+  { label: "Blog", to: "/blog" },
+  { label: "Contact", to: "/#contact" },
+];
+
+export default function Navbar() {
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
+  const { user } = useAuth();
+
+  useEffect(() => {
+    if (location.hash) {
+      requestAnimationFrame(() =>
+        document.querySelector(location.hash)?.scrollIntoView({ behavior: "smooth" }),
+      );
+    }
+  }, [location]);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 24);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  return (
+    <nav
+      className={`fixed inset-x-0 top-0 z-50 border-b transition duration-300 ${
+        scrolled || open
+          ? "border-white/8 bg-ink-950/82 shadow-lg shadow-black/15 backdrop-blur-xl"
+          : "border-transparent bg-transparent"
+      }`}
+      aria-label="Main navigation"
+    >
+      <div className="container-shell flex h-18 items-center justify-between">
+        <Link className="inline-flex items-center gap-2 font-semibold text-white" to="/">
+          <span className="grid size-9 place-items-center rounded-xl bg-gradient-to-br from-cyan-400 to-blue-600 shadow-lg shadow-blue-500/20">
+            <Code2 className="size-5" aria-hidden="true" />
+          </span>
+          <span>
+            Antor<span className="text-cyan-accent">.</span>
+          </span>
+        </Link>
+
+        <div className="hidden items-center gap-1 lg:flex">
+          {navItems.map((item) =>
+            item.to.includes("#") ? (
+              <Link
+                className="rounded-lg px-3 py-2 text-sm text-slate-400 transition hover:bg-white/5 hover:text-white"
+                key={item.label}
+                to={item.to}
+              >
+                {item.label}
+              </Link>
+            ) : (
+              <NavLink
+                className={({ isActive }) =>
+                  `rounded-lg px-3 py-2 text-sm transition hover:bg-white/5 hover:text-white ${
+                    isActive ? "text-cyan-accent" : "text-slate-400"
+                  }`
+                }
+                end={item.to === "/"}
+                key={item.label}
+                to={item.to}
+              >
+                {item.label}
+              </NavLink>
+            ),
+          )}
+          <Link
+            className="ml-3 inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-white transition hover:border-cyan-accent/40 hover:bg-cyan-accent/8"
+            to={user ? "/dashboard" : "/login"}
+          >
+            {user ? (
+              <LayoutDashboard className="size-4" aria-hidden="true" />
+            ) : (
+              <LogIn className="size-4" aria-hidden="true" />
+            )}
+            {user ? "Dashboard" : "Admin"}
+          </Link>
+        </div>
+
+        <button
+          className="rounded-lg p-2 text-slate-300 hover:bg-white/5 lg:hidden"
+          type="button"
+          aria-expanded={open}
+          aria-label={open ? "Close navigation" : "Open navigation"}
+          onClick={() => setOpen((current) => !current)}
+        >
+          {open ? <X className="size-6" /> : <Menu className="size-6" />}
+        </button>
+      </div>
+
+      {open && (
+        <div className="container-shell border-t border-white/8 pb-5 pt-3 lg:hidden">
+          {navItems.map((item) => (
+              <Link
+                className="block rounded-lg px-3 py-2.5 text-sm text-slate-300 hover:bg-white/5 hover:text-white"
+                key={item.label}
+                onClick={() => setOpen(false)}
+                to={item.to}
+            >
+              {item.label}
+            </Link>
+          ))}
+          <Link
+            className="mt-2 flex items-center gap-2 rounded-lg bg-white/5 px-3 py-2.5 text-sm font-medium text-cyan-accent"
+            onClick={() => setOpen(false)}
+            to={user ? "/dashboard" : "/login"}
+          >
+            {user ? <LayoutDashboard className="size-4" /> : <LogIn className="size-4" />}
+            {user ? "Dashboard" : "Admin login"}
+          </Link>
+        </div>
+      )}
+    </nav>
+  );
+}
