@@ -28,7 +28,10 @@ export default [
       ...reactRefresh.configs.vite.rules,
       "react/jsx-uses-vars": "error",
       "react-hooks/set-state-in-effect": "off",
-      "no-unused-vars": ["error", { varsIgnorePattern: "^[A-Z_]" }],
+      "no-unused-vars": [
+        "error",
+        { varsIgnorePattern: "^[A-Z_]", argsIgnorePattern: "^_" },
+      ],
     },
   },
 ];

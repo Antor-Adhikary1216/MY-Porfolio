@@ -8,6 +8,7 @@ import {
   Menu,
   PlusCircle,
   Sparkles,
+  UsersRound,
   X,
 } from "lucide-react";
 import { useState } from "react";
@@ -23,6 +24,7 @@ const links = [
   { label: "Add blog", to: "/dashboard/blogs/new", icon: PlusCircle },
   { label: "Manage blogs", to: "/dashboard/blogs", icon: BookOpenText },
   { label: "Messages", to: "/dashboard/messages", icon: Mail },
+  { label: "Users", to: "/dashboard/users", icon: UsersRound },
 ];
 
 export default function Dashboard() {

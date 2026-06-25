@@ -37,6 +37,7 @@ const router = createBrowserRouter([
       { path: "blogs/new", lazy: lazyComponent(() => import("../dashboard/AddBlog")) },
       { path: "blogs/:id/edit", lazy: lazyComponent(() => import("../dashboard/AddBlog")) },
       { path: "messages", lazy: lazyComponent(() => import("../dashboard/Messages")) },
+      { path: "users", lazy: lazyComponent(() => import("../dashboard/Users")) },
     ],
   },
 ]);
