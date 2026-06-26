@@ -72,20 +72,22 @@ export default function Hero() {
           initial={{ opacity: 0, scale: 0.9, rotate: 2 }}
           animate={{ opacity: 1, scale: 1, rotate: 0 }}
           transition={{ duration: 0.65, delay: 0.1 }}
-          className="relative mx-auto w-full max-w-md"
+          className="relative mx-auto w-full max-w-sm sm:max-w-md"
         >
           <div className="absolute inset-10 rounded-full bg-gradient-to-br from-cyan-400/25 to-purple-500/25 blur-[70px]" />
-          <div className="gradient-border glass-card relative aspect-square rounded-[2.25rem] p-6">
-            <div className="relative grid h-full place-items-center overflow-hidden rounded-[1.7rem] border border-white/8 bg-gradient-to-br from-blue-500/16 via-ink-900 to-purple-500/14">
-              <div className="absolute inset-0 opacity-30 [background-image:radial-gradient(circle_at_center,white_1px,transparent_1px)] [background-size:24px_24px]" />
-              <div className="relative">
-                <span className="gradient-text text-[8rem] font-black leading-none tracking-[-0.08em] sm:text-[10rem]">
-                  AA
-                </span>
-                <div className="mx-auto mt-2 h-px w-24 bg-gradient-to-r from-transparent via-cyan-accent to-transparent" />
-                <p className="mt-4 text-center text-xs font-semibold uppercase tracking-[0.32em] text-slate-400">
+          <div className="gradient-border glass-card relative aspect-[3/4] overflow-hidden rounded-[2.25rem] p-2">
+            <div className="relative h-full overflow-hidden rounded-[1.8rem] border border-white/10 bg-ink-900">
+              <img
+                src="/hero-portrait.jpeg"
+                alt="Antor Adhikari portrait"
+                className="h-full w-full object-cover object-center"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-ink-950/72 via-transparent to-transparent" />
+              <div className="absolute bottom-5 left-5 right-5">
+                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-cyan-accent">
                   Code / Craft / Curiosity
                 </p>
+                <p className="mt-2 text-2xl font-bold text-white">Antor Adhikari</p>
               </div>
             </div>
           </div>
