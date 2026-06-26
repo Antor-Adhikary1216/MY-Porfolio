@@ -16,7 +16,7 @@ const strengths = [
   {
     icon: Layers3,
     title: "End-to-end thinking",
-    text: "I connect the entire product journey—from an idea and UI to deployed, maintainable code.",
+    text: "I connect the entire product journey, from an idea and UI to deployed, maintainable code.",
   },
 ];
 

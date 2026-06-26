@@ -39,7 +39,7 @@ export default function Contact() {
               <div className="absolute -left-20 -top-20 size-48 rounded-full bg-cyan-400/10 blur-[70px]" />
               <SectionHeading
                 eyebrow="Contact"
-                title="Let’s build something worth remembering."
+                title="Let's build something worth remembering."
                 description="Have a role, freelance project, or interesting product idea? Tell me what you are working on."
               />
               <div className="space-y-4 text-sm">

@@ -28,7 +28,7 @@ export default function Hero() {
             Full-Stack Developer
           </h2>
           <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-400">
-            I build responsive frontend interfaces and powerful backend APIs—turning product ideas
+            I build responsive frontend interfaces and powerful backend APIs, turning product ideas
             into fast, reliable, and genuinely enjoyable digital experiences.
           </p>
 
@@ -59,7 +59,7 @@ export default function Hero() {
               </span>
             )}
             <Link
-              to="/#contact"
+              to="/contact"
               className="inline-flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold text-slate-300 transition hover:text-cyan-accent"
             >
               <Mail className="size-4" aria-hidden="true" />
@@ -84,7 +84,7 @@ export default function Hero() {
                 </span>
                 <div className="mx-auto mt-2 h-px w-24 bg-gradient-to-r from-transparent via-cyan-accent to-transparent" />
                 <p className="mt-4 text-center text-xs font-semibold uppercase tracking-[0.32em] text-slate-400">
-                  Code · Craft · Curiosity
+                  Code / Craft / Curiosity
                 </p>
               </div>
             </div>

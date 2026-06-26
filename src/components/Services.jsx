@@ -22,7 +22,7 @@ const services = [
     number: "03",
     title: "Full-Stack Applications",
     description:
-      "Complete web products—from technical planning and UI implementation to deployment and iteration.",
+      "Complete web products, from technical planning and UI implementation to deployment and iteration.",
   },
 ];
 

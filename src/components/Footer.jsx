@@ -43,7 +43,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="border-t border-white/5 py-5 text-center text-xs text-slate-600">
-        © {new Date().getFullYear()} Antor Adhikari. Built with React.
+        Copyright {new Date().getFullYear()} Antor Adhikari. Built with React.
       </div>
     </footer>
   );
