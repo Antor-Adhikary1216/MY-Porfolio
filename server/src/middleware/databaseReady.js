@@ -8,4 +8,5 @@ export default function databaseReady(_request, response, next) {
   }
 
   return next();
+  
 }
