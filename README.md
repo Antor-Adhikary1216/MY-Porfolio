@@ -5,11 +5,24 @@ A responsive React and Vite portfolio with Firebase Authentication, MongoDB pers
 ## Start locally
 
 1. Copy `.env.example` to `.env`.
-2. Add your MongoDB URI, Firebase web configuration, Firebase Admin service-account values, and admin email.
+2. Add your MongoDB Atlas URI, Firebase web configuration, Firebase Admin service-account values, and admin email.
 3. Run `npm install`.
 4. Run `npm run dev:full`.
 
 The frontend runs at `http://localhost:5173` and the API runs at `http://localhost:5000`.
+
+## Google login and MongoDB Atlas
+
+1. In Firebase Authentication, enable the Google sign-in provider.
+2. Add `localhost` and your deployed portfolio hostname to Firebase Authentication's authorized domains.
+3. Copy the Firebase Web SDK values into the matching `VITE_FIREBASE_*` variables.
+4. Create a Firebase Admin service account and copy its project ID, client email, and private key into the backend variables. Keep the private key on one line with `\n` escapes.
+5. In MongoDB Atlas, create a database user, allow the development/deployment network addresses, and copy the SRV connection string into `MONGODB_URI`.
+6. Put the Firebase email that should access the admin dashboard in `ADMIN_EMAILS`.
+
+Google sign-in sends the Firebase ID token to `GET /api/auth/me`. The server verifies it with Firebase Admin and upserts the user's Firebase UID, email, display name, photo, provider, role, and login timestamps into the `users` collection.
+
+Never commit `.env` or a Firebase service-account JSON file.
 
 ## Authentication and users
 

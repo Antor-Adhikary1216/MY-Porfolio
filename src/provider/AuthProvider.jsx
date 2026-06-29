@@ -1,13 +1,32 @@
 import { useEffect, useMemo, useState } from "react";
 import {
-  GoogleAuthProvider,
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
 } from "firebase/auth";
-import { auth, isFirebaseConfigured } from "../firebase/firebase.config";
+import axiosPublic from "../api/axiosPublic";
+import { auth, googleProvider, isFirebaseConfigured } from "../firebase/firebase.config";
 import AuthContext from "./auth-context";
+
+async function syncAuthenticatedUser(credential) {
+  const token = await credential.user.getIdToken();
+  await axiosPublic.get("/auth/me", {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return credential;
+}
+
+async function signInAndSync(signIn) {
+  const credential = await signIn();
+
+  try {
+    return await syncAuthenticatedUser(credential);
+  } catch (error) {
+    await signOut(auth);
+    throw error;
+  }
+}
 
 export default function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
@@ -29,11 +48,13 @@ export default function AuthProvider({ children }) {
       isFirebaseConfigured,
       login: (email, password) => {
         if (!auth) throw new Error("Firebase Authentication is not configured.");
-        return signInWithEmailAndPassword(auth, email, password);
+        return signInAndSync(() => signInWithEmailAndPassword(auth, email, password));
       },
       googleLogin: () => {
-        if (!auth) throw new Error("Firebase Authentication is not configured.");
-        return signInWithPopup(auth, new GoogleAuthProvider());
+        if (!auth || !googleProvider) {
+          throw new Error("Firebase Authentication is not configured.");
+        }
+        return signInAndSync(() => signInWithPopup(auth, googleProvider));
       },
       logout: () => (auth ? signOut(auth) : Promise.resolve()),
     }),
