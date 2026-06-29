@@ -1,6 +1,7 @@
-import { act, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { useContext } from "react";
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import axiosPublic from "../api/axiosPublic";
 import AuthProvider from "./AuthProvider";
 import AuthContext from "./auth-context";
 
@@ -16,7 +17,6 @@ const authMocks = vi.hoisted(() => ({
 }));
 
 vi.mock("firebase/auth", () => ({
-  GoogleAuthProvider: vi.fn(),
   onAuthStateChanged: authMocks.onAuthStateChanged,
   signInWithEmailAndPassword: authMocks.signInWithEmailAndPassword,
   signInWithPopup: authMocks.signInWithPopup,
@@ -25,15 +25,27 @@ vi.mock("firebase/auth", () => ({
 
 vi.mock("../firebase/firebase.config", () => ({
   auth: { name: "test-auth" },
+  googleProvider: { providerId: "google.com" },
   isFirebaseConfigured: true,
 }));
 
+vi.mock("../api/axiosPublic", () => ({ default: { get: vi.fn() } }));
+
 function Consumer() {
-  const { user, loading } = useContext(AuthContext);
-  return <p>{loading ? "Checking session" : user?.email || "Signed out"}</p>;
+  const { googleLogin, user, loading } = useContext(AuthContext);
+  return (
+    <>
+      <p>{loading ? "Checking session" : user?.email || "Signed out"}</p>
+      <button type="button" onClick={googleLogin}>Google login</button>
+    </>
+  );
 }
 
 describe("AuthProvider", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
   it("tracks Firebase user state with onAuthStateChanged", async () => {
     render(
       <AuthProvider>
@@ -48,5 +60,32 @@ describe("AuthProvider", () => {
     });
 
     expect(screen.getByText("admin@example.com")).toBeInTheDocument();
+  });
+
+  it("signs in with Google and synchronizes the user profile with MongoDB", async () => {
+    const getIdToken = vi.fn().mockResolvedValue("firebase-id-token");
+    authMocks.signInWithPopup.mockResolvedValue({
+      user: { getIdToken },
+    });
+    axiosPublic.get.mockResolvedValue({ data: { data: { role: "user" } } });
+
+    render(
+      <AuthProvider>
+        <Consumer />
+      </AuthProvider>,
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Google login" }));
+
+    await waitFor(() =>
+      expect(authMocks.signInWithPopup).toHaveBeenCalledWith(
+        { name: "test-auth" },
+        { providerId: "google.com" },
+      ),
+    );
+    expect(getIdToken).toHaveBeenCalled();
+    expect(axiosPublic.get).toHaveBeenCalledWith("/auth/me", {
+      headers: { Authorization: "Bearer firebase-id-token" },
+    });
   });
 });
